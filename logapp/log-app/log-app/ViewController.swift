@@ -35,13 +35,17 @@ class ViewController: UIViewController {
         logButton.layer.cornerRadius = 8.0
         logButton.layer.masksToBounds = true
         
-        spinner.frame = CGRect(x:logButton.bounds.width / 2, y: logButton.bounds.height / 2 - 5, width: 10, height: 10)
+        spinner.frame = CGRect(x:logButton.bounds.width / 2, y: logButton.bounds.height / 2 - 5, width: 5, height: 5)
         spinner.stopAnimating()
         spinner.alpha = 0.0
         logButton.addSubview(spinner)
         
         logButton.setTitle("登陆", for: .normal)
         
+        cloudAction(cloud: cloud1)
+        cloudAction(cloud: cloud2)
+        cloudAction(cloud: cloud3)
+        cloudAction(cloud: cloud4)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,12 +131,22 @@ class ViewController: UIViewController {
     
     func showAlert(alMessage:String){
         let alert = UIAlertController(title: "提醒信息", message: alMessage, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(ok)
         
         present(alert, animated: true, completion: nil)
     }
-
+    
+    func cloudAction(cloud: UIImageView){
+        let cloudSpeed = 30.0/self.view.bounds.width
+        let time = (self.view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
+        UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.curveLinear], animations: {
+            cloud.frame.origin.x = self.view.frame.width
+        }) { (_) in
+            cloud.frame.origin.x = -cloud.frame.width
+            self.cloudAction(cloud: cloud)
+        }
+    }
 
 }
 
