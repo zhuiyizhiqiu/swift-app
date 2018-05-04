@@ -41,6 +41,7 @@ class ViewController: UIViewController {
         logButton.addSubview(spinner)
         
         logButton.setTitle("登陆", for: .normal)
+        logButton.backgroundColor = UIColor(red: 116/255, green: 212/255, blue: 98/255, alpha: 1.0)
         
         cloudAction(cloud: cloud1)
         cloudAction(cloud: cloud2)
@@ -108,25 +109,37 @@ class ViewController: UIViewController {
     }
     
     @IBAction func log(){
-        UIView.animate(withDuration: 2.0, delay: 0, options: [], animations: {
-            self.logButton.backgroundColor = UIColor(red: 0.85, green: 0.84, blue: 0.45, alpha: 1.0)
+        view.endEditing(true)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
+            self.logButton.bounds.size.width += 40
+            self.spinner.center.x = self.logButton.bounds.width / 2
             self.spinner.isHidden = false
             self.spinner.alpha = 1.0
+            self.spinner.startAnimating()
             self.logButton.setTitle("", for: .normal)
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 2.0, delay: 0, options: [], animations: {
+            self.logButton.backgroundColor = UIColor(red: 0.85, green: 0.84, blue: 0.45, alpha: 1.0)
+
         }) { (_) in
             delay(2, completion: {
                 if self.usename.text == "zhuiyizhiqiu" && self.password.text == "123456" {
-                    self.logButton.backgroundColor = UIColor(red: 116/255, green: 212/255, blue: 98/255, alpha: 1.0)
-                    self.spinner.isHidden = true
-                    self.showAlert(alMessage: "登陆成功")
+                    self.logTap(alMessage: "登陆成功", logButton: self.logButton, setTitle: "登陆")
                 }else{
-                    self.logButton.backgroundColor = UIColor(red: 116/255, green: 212/255, blue: 98/255, alpha: 1.0)
-                    self.spinner.isHidden = true
-                    self.logButton.setTitle("登陆", for: .normal)
-                    self.showAlert(alMessage: "登陆失败")
+                    self.logTap(alMessage: "登陆失败", logButton: self.logButton, setTitle: "登陆")
                 }
             })
         }
+    }
+    
+    func logTap(alMessage:String,logButton: UIButton,setTitle:String){
+         self.logButton.backgroundColor = UIColor(red: 116/255, green: 212/255, blue: 98/255, alpha: 1.0)
+        self.spinner.isHidden = true
+        self.spinner.stopAnimating()
+        self.showAlert(alMessage: alMessage)
+        self.logButton.setTitle(setTitle, for: .normal)
+        logButton.bounds.size.width -= 40
     }
     
     func showAlert(alMessage:String){
@@ -138,7 +151,7 @@ class ViewController: UIViewController {
     }
     
     func cloudAction(cloud: UIImageView){
-        let cloudSpeed = 30.0/self.view.bounds.width
+        let cloudSpeed = 60.0/self.view.bounds.width
         let time = (self.view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
         UIView.animate(withDuration: TimeInterval(time), delay: 0, options: [.curveLinear], animations: {
             cloud.frame.origin.x = self.view.frame.width
