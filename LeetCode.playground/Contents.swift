@@ -218,153 +218,185 @@ while q != nil {
 //    }
 //}
 
-//NSMutableArray 是引用类型，而NSArray是值类型
-var mutableArray = [1,2,3]
-for _ in mutableArray {
-    mutableArray.removeAll()
-}
+////NSMutableArray 是引用类型，而NSArray是值类型
+//var mutableArray = [1,2,3]
+//for _ in mutableArray {
+//    mutableArray.removeAll()
+//}
+//
+//let mutableArray1: NSMutableArray = [1,2,3]
+//let otherArray = mutableArray1
+//mutableArray1.add(4)
+//otherArray
+//
+//class BinaryScanner {
+//    var position: Int
+//    let data: Data
+//    init(data: Data) {
+//        self.position = 0
+//        self.data = data
+//    }
+//}
+//
+//extension BinaryScanner{
+//    func scanByte() -> UInt8?{
+//        guard position < data.endIndex else {
+//            return nil
+//        }
+//
+//        position += 1
+//        return data[position - 1]
+//    }
+//}
+//
+//func scanRemainingBytes(scanner: BinaryScanner){
+//    while let byte = scanner.scanByte() {
+//        print(byte)
+//    }
+//}
+//
+//let scanner = BinaryScanner(data: Data("012".utf8))
+//scanRemainingBytes(scanner: scanner)
+//Data("012".utf8)
+//
+//struct Point{
+//    var x: Int
+//    var y: Int
+//}
+//
+//let origin = Point(x: 0, y: 0)
+//
+//var otherPoint = Point(x: 0, y: 0)
+//otherPoint.x += 10
+//otherPoint
+//
+//var thirdPoint = origin
+//thirdPoint.x += 10
+//thirdPoint
+//origin
+//
+//struct Size{
+//    var width: Int
+//    var height: Int
+//}
+//
+//struct Rectangle{
+//    var origin: Point
+//    var size: Size
+//}
+//
+//extension Point{
+//    static let zero = Point(x: 0, y: 0)
+//}
+//
+//let rect = Rectangle(origin: Point.zero, size: Size(width: 320, height: 480))
+//
+//extension Rectangle{
+//    init(x: Int = 0,y: Int = 0,width: Int,height: Int) {
+//        origin = Point(x: x, y: y)
+//        size = Size(width: width, height: height)
+//    }
+//}
+//
+//var screen = Rectangle(width: 320, height: 480){
+//    didSet{
+//        print("Screen changed:\(screen)")
+//    }
+//}
+//screen.origin.x = 10
+//
+//var screens: [Rectangle] = []{
+//    didSet{
+//        print("Screen array changed:\(screens)")
+//    }
+//}
+//
+//screens.append(Rectangle(width: 320, height: 480))
+//screens[0].origin.x += 100
+//
+//func +(lhs:Point,rhs:Point) -> Point{
+//    return Point(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+//}
+//screen.origin + Point(x: 10, y: 10)
+//extension Rectangle{
+//    mutating func translate(by offset: Point) {
+//        origin = origin + offset
+//    }
+//}
+//
+//screen.translate(by: Point(x: 10, y: 10))
+//screen
+//
+//extension Rectangle{
+//    func translated(by offset: Point) -> Rectangle{
+//        var copy = self
+//        copy.translate(by: offset)
+//        return copy
+//    }
+//}
+//screen.translated(by: Point(x: 20, y: 20))
+//
+//func translateByTwentyTwenty(rectangle: inout Rectangle){
+//    rectangle.translate(by: Point(x: 20, y: 20))
+//}
+//translateByTwentyTwenty(rectangle: &screen)
+//screen
+//
+//func uniquelntegerProvide() -> () -> Int{
+//    var i = 0
+//    return{
+//        i += i
+//        return i
+//    }
+//}
+//
+//class View{
+//    var window: Window
+//    init(window: Window) {
+//        self.window = window
+//    }
+//}
+//
+//class Window{
+//    var rootView: View?
+//}
+//
+//var window: Window? = Window()
+//var view: View? = View(window: window!)
+//window?.rootView = view
+//view = nil
+//window = nil
 
-let mutableArray1: NSMutableArray = [1,2,3]
-let otherArray = mutableArray1
-mutableArray1.add(4)
-otherArray
 
-class BinaryScanner {
-    var position: Int
-    let data: Data
-    init(data: Data) {
-        self.position = 0
-        self.data = data
+class TreeNode{
+    var val: Int
+    var left: TreeNode?
+    var right: TreeNode?
+    init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
     }
 }
 
-extension BinaryScanner{
-    func scanByte() -> UInt8?{
-        guard position < data.endIndex else {
-            return nil
-        }
-        
-        position += 1
-        return data[position - 1]
+func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+    if q == nil && p == nil{
+        return true
     }
-}
-
-func scanRemainingBytes(scanner: BinaryScanner){
-    while let byte = scanner.scanByte() {
-        print(byte)
+    if q == nil || p == nil {
+        return false
     }
-}
-
-let scanner = BinaryScanner(data: Data("012".utf8))
-scanRemainingBytes(scanner: scanner)
-Data("012".utf8)
-
-struct Point{
-    var x: Int
-    var y: Int
-}
-
-let origin = Point(x: 0, y: 0)
-
-var otherPoint = Point(x: 0, y: 0)
-otherPoint.x += 10
-otherPoint
-
-var thirdPoint = origin
-thirdPoint.x += 10
-thirdPoint
-origin
-
-struct Size{
-    var width: Int
-    var height: Int
-}
-
-struct Rectangle{
-    var origin: Point
-    var size: Size
-}
-
-extension Point{
-    static let zero = Point(x: 0, y: 0)
-}
-
-let rect = Rectangle(origin: Point.zero, size: Size(width: 320, height: 480))
-
-extension Rectangle{
-    init(x: Int = 0,y: Int = 0,width: Int,height: Int) {
-        origin = Point(x: x, y: y)
-        size = Size(width: width, height: height)
+    if p!.val != q!.val {
+        return false
     }
-}
-
-var screen = Rectangle(width: 320, height: 480){
-    didSet{
-        print("Screen changed:\(screen)")
+    if isSameTree(p?.left, q?.right) && isSameTree(p?.right, q?.left){ //改动了这里
+        return true
     }
-}
-screen.origin.x = 10
-
-var screens: [Rectangle] = []{
-    didSet{
-        print("Screen array changed:\(screens)")
-    }
+    return false
 }
 
-screens.append(Rectangle(width: 320, height: 480))
-screens[0].origin.x += 100
-
-func +(lhs:Point,rhs:Point) -> Point{
-    return Point(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+func isSymmetric(_ root: TreeNode?) -> Bool{
+    return isSameTree(root, root)
 }
-screen.origin + Point(x: 10, y: 10)
-extension Rectangle{
-    mutating func translate(by offset: Point) {
-        origin = origin + offset
-    }
-}
-
-screen.translate(by: Point(x: 10, y: 10))
-screen
-
-extension Rectangle{
-    func translated(by offset: Point) -> Rectangle{
-        var copy = self
-        copy.translate(by: offset)
-        return copy
-    }
-}
-screen.translated(by: Point(x: 20, y: 20))
-
-func translateByTwentyTwenty(rectangle: inout Rectangle){
-    rectangle.translate(by: Point(x: 20, y: 20))
-}
-translateByTwentyTwenty(rectangle: &screen)
-screen
-
-func uniquelntegerProvide() -> () -> Int{
-    var i = 0
-    return{
-        i += i
-        return i
-    }
-}
-
-class View{
-    var window: Window
-    init(window: Window) {
-        self.window = window
-    }
-}
-
-class Window{
-    var rootView: View?
-}
-
-var window: Window? = Window()
-var view: View? = View(window: window!)
-window?.rootView = view
-view = nil
-window = nil
 
 
